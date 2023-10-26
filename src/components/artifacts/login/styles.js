@@ -1,5 +1,4 @@
-import { Tab, Tabs } from "react-tabs";
-import { Container } from "semantic-ui-react";
+import { Container, Label } from "semantic-ui-react";
 import styled from "styled-components";
 
 export const LoginContainer = styled(Container)`
@@ -12,14 +11,10 @@ export const LoginContainer = styled(Container)`
   position: absolute;
   top: 50%;
   left: 50%;
+  background: #00ff00;
   transform: translate(-50%, -50%);
 `;
 
-export const LoginTabs = styled(Tabs)`
-    background: #ffffff;
-    padding: 15px;
-` 
+export const MobileTitle = styled(Label)`
 
-export const LoginTab = styled(Tab)`
-    background: #10ff10;
 ` 
