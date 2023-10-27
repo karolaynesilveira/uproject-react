@@ -1,28 +1,31 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import background from "../../../../public/assets/images/test_bg.jpg";
 
 export const Wrapper = styled.section`
   display: flex;
   width: 100vw;
-  background-color: #ffffff;
   min-height: 100vh;
   max-height: 100vh;
   overflow: hidden;
 
-  background-image: url('${background}');
+  background-image: url("${background}");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  @media only screen and (max-width: 768px) {
+    background-image: none;
+  }
 `;
 
 export const Center = styled.div`
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  width: 40vw;
-  max-width: 40vw;
+  padding-top: 100px;
+  width: 35vw;
+  max-width: 35vw;
   height: 100vh;
 
   @media only screen and (max-width: 1260px) {
@@ -36,17 +39,22 @@ export const Center = styled.div`
   }
 
   @media only screen and (max-width: 768px) {
-    width: 90vw;
-    max-width: 90vw;
+    width: 100vw;
+    max-width: 100vw;
+    padding: 10px;
+    background-image: url('${background}');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }`;
 
-
 export const Children = styled.div`
   width: 100%;
-  padding: 16px;
-  border-radius: 3px;
-  background-color: rgba(255, 255, 255);
+  padding: 25px;
+  border-radius: 15px;
+  background-color: #ffffff;
+  border: solid green 3px;
 `;
 
 export const Title = styled.h1`

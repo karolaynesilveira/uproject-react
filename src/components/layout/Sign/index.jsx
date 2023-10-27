@@ -7,7 +7,7 @@ const Sign = ({ title, children }) => {
   return (
     <S.Wrapper>
       <S.Center>
-        <Image src={logo} />
+        <Image centered="true" src={logo} />
         <br />
         <S.Children>
           <S.SubTitle>{title}</S.SubTitle>

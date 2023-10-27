@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Icon, Input, MenuItem, Tab } from "semantic-ui-react";
+import { Checkbox, Icon, MenuItem, Tab } from "semantic-ui-react";
 import { Form, Button } from "semantic-ui-react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
 import Sign from "../../layout/Sign";
 import {
@@ -10,6 +10,7 @@ import {
   USER_TYPE_COORDINATOR,
   USER_TYPE_VISITOR,
 } from "../../../commons/userType";
+import { Input, LoginTab } from "./styles";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -86,10 +87,11 @@ const Login = () => {
         </MenuItem>
       ),
       render: () => (
-        <Tab.Pane>
+        <LoginTab>
           <Form onSubmit={callbackSubmit} loading={loading}>
             <Form.Field>
-              <input
+              <Input
+                size="huge"
                 type="text"
                 name="username"
                 placeholder="Nome de usuário"
@@ -99,27 +101,34 @@ const Login = () => {
             </Form.Field>
             <Form.Field>
               <Input
+                size="huge"
                 type={passwordVisible ? "text" : "password"}
                 name="password"
                 placeholder="Senha"
                 onChange={handleChange}
                 value={data.password}
-                action={{
-                  color: "green",
-                  icon: passwordVisible ? "eye slash" : "eye",
-                  onClick: (e) => {
-                    e.preventDefault();
-                    togglePassword();
-                  },
-                }}
-                actionPosition="right"
+                icon={
+                  <Icon
+                    name={passwordVisible ? "eye slash" : "eye"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      togglePassword();
+                    }}
+                  />
+                }
+                action={
+                  <div
+                    style={{ width: "50px" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      togglePassword();
+                    }}
+                  />
+                }
               />
             </Form.Field>
-            <Button type="submit" primary>
-              Entrar
-            </Button>
           </Form>
-        </Tab.Pane>
+        </LoginTab>
       ),
     },
     {
@@ -136,10 +145,11 @@ const Login = () => {
         </MenuItem>
       ),
       render: () => (
-        <Tab.Pane>
+        <LoginTab>
           <Form onSubmit={callbackSubmit} loading={loading}>
             <Form.Field>
-              <input
+              <Input
+                size="huge"
                 type="text"
                 name="username"
                 placeholder="Nome de usuário"
@@ -150,27 +160,34 @@ const Login = () => {
 
             <Form.Field>
               <Input
+                size="huge"
                 type={passwordVisible ? "text" : "password"}
                 name="password"
                 placeholder="Senha"
                 onChange={handleChange}
                 value={data.password}
-                action={{
-                  color: "green",
-                  icon: passwordVisible ? "eye slash" : "eye",
-                  onClick: (e) => {
-                    e.preventDefault();
-                    togglePassword();
-                  },
-                }}
-                actionPosition="right"
+                icon={
+                  <Icon
+                    name={passwordVisible ? "eye slash" : "eye"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      togglePassword();
+                    }}
+                  />
+                }
+                action={
+                  <div
+                    style={{ width: "50px" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      togglePassword();
+                    }}
+                  />
+                }
               />
             </Form.Field>
-            <Button type="submit" primary>
-              Entrar
-            </Button>
           </Form>
-        </Tab.Pane>
+        </LoginTab>
       ),
     },
     {
@@ -187,10 +204,11 @@ const Login = () => {
         </MenuItem>
       ),
       render: () => (
-        <Tab.Pane>
+        <LoginTab>
           <Form onSubmit={callbackSubmit} loading={loading}>
             <Form.Field>
-              <input
+              <Input
+                size="huge"
                 type="text"
                 name="username"
                 placeholder="Nome da Sessão"
@@ -198,11 +216,8 @@ const Login = () => {
                 value={data.username}
               />
             </Form.Field>
-            <Button type="submit" primary>
-              Entrar
-            </Button>
           </Form>
-        </Tab.Pane>
+        </LoginTab>
       ),
     },
   ];
@@ -210,8 +225,43 @@ const Login = () => {
   return (
     <>
       <Sign>
-        <Tab panes={panes} defaultActiveIndex={0} onTabChange={onTabChange} />
+        <Tab
+          menu={{ secondary: true }}
+          panes={panes}
+          defaultActiveIndex={0}
+          onTabChange={onTabChange}
+        />
         <br />
+        <Button
+          size="large"
+          color="green"
+          animated
+          type="submit"
+          onClick={callbackSubmit}
+        >
+          <Button.Content visible>Entrar</Button.Content>
+          <Button.Content className="hidden_element" hidden>
+            <Icon
+              name={`${
+                !data.username || !data.password & (activeTab !== 2)
+                  ? "lock"
+                  : "arrow right"
+              }`}
+            />
+          </Button.Content>
+        </Button>
+        {activeTab !== 2 && (
+          <Checkbox style={{ left: "5%" }} label="Permanecer conectado" />
+        )}
+        {activeTab === 2 && (
+          <div style={{ marginTop: "15px" }}>
+            <Checkbox label="Eu li e aceito os" />
+            <Link to="contrato">
+              {" "}
+              Termos de Uso <span>&#128206;</span>
+            </Link>
+          </div>
+        )}
       </Sign>
     </>
   );

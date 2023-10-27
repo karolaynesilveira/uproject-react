@@ -1,4 +1,4 @@
-import { Container, Label } from "semantic-ui-react";
+import { Container, Input as SemanticInput } from "semantic-ui-react";
 import styled from "styled-components";
 
 export const LoginContainer = styled(Container)`
@@ -15,6 +15,33 @@ export const LoginContainer = styled(Container)`
   transform: translate(-50%, -50%);
 `;
 
-export const MobileTitle = styled(Label)`
+export const Input = styled(SemanticInput)`
+  &&& {
+    input {
+      border: none;
+      border-bottom: 2px solid green;
+      border-radius: 0;
+      transition: border-color 0.3s, color 0.3s;
+      color: green;
 
-` 
+      &:focus {
+        border-color: lightgreen;
+      }
+
+      &::placeholder {
+        color: green;
+      }
+    }
+  }
+
+  &.transparent {
+    &&& {
+      input {
+        background: transparent;
+      }
+    }
+  }
+`;
+
+export const LoginTab = styled.div`
+`;
