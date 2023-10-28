@@ -43,23 +43,24 @@ const Login = () => {
 
   const callbackSubmit = () => {
     setLoading(true);
-    console.log("Login as User Type:", activeTab);
-    console.log("Form Data:", data);
     if (!data.username || !data.password) {
       toast.error("Deve-se inserir uma senha ou nome de usuário!");
     } else {
       toast.success("Login efetuado com sucesso!");
       switch (activeTab) {
         case 0: {
-          navigate("/coordinator/route");
+          console.log('logged')
+          navigate('/coordinator/home');
           break;
         }
         case 1: {
-          navigate("/directorate/route");
+          console.log('logged')
+          navigate('/directorate/home');
           break;
         }
         case 2: {
-          navigate("/administration/route");
+          console.log('logged')
+          navigate('/administration/home');
           break;
         }
       }
@@ -224,7 +225,7 @@ const Login = () => {
 
   return (
     <>
-      <Sign>
+      <Sign loading={loading}>
         <Tab
           menu={{ secondary: true }}
           panes={panes}

@@ -1,9 +1,9 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-const PrivateRoute = () => {
-  const isValid = false;
-  return isValid ? <Outlet /> : <Navigate to="/entrar" />;
+const PrivateRoute = (props) => {
+  const isValid = true;
+  return isValid ? props.children : <Navigate to="/entrar" />;
 };
 
 export default PrivateRoute;
