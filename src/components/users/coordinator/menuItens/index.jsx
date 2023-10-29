@@ -1,11 +1,20 @@
-import { Icon, Menu } from "semantic-ui-react";
+import { Icon, Image, Menu } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../../../public/assets/logo/logo.png";
 
-const CoordinatorMenuItens = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const CoordinatorMenuItens = ({ options, showOptions }) => {
   const navigate = useNavigate();
 
   return (
     <>
+      <Image
+        fluid
+        shadow
+        style={{ padding: "0.5rem", marginRight: "-1rem", paddingLeft: "1rem" }}
+        src={logo}
+        size="small"
+      ></Image>
       <Menu.Item
         as="a"
         onClick={() => {
@@ -27,11 +36,20 @@ const CoordinatorMenuItens = () => {
       <Menu.Item
         as="a"
         onClick={() => {
-          navigate("/coordinator/resources");
+          navigate("/coordinator/solicitations");
         }}
       >
         <Icon name="boxes" />
-        Recursos
+        Solicitações
+      </Menu.Item>
+      <Menu.Item
+        as="a"
+        onClick={() => {
+          navigate("/coordinator/reports");
+        }}
+      >
+        <Icon name="archive" />
+        Relatórios
       </Menu.Item>
       <Menu.Item
         as="a"
@@ -40,21 +58,14 @@ const CoordinatorMenuItens = () => {
         }}
       >
         <Icon name="users" />
-        Pessoas
+        Usuários
       </Menu.Item>
-      <Menu.Item as="a">
-        <Icon
-          name="archive"
-          onClick={() => {
-            navigate("/coordinator/reports");
-          }}
-        />
-        Relatórios
-      </Menu.Item>
-      {/* <Menu.Item as="a" onClick={() => setSideMenuVisible(!sideMenuVisible)}>
-        <Icon name="cog" />
-        Opções
-      </Menu.Item> */}
+      <div style={{ marginLeft: "auto" }}>
+        <Menu.Item as="a" onClick={() => showOptions((prev) => !prev)}>
+          <Icon name="cog" />
+          Opções
+        </Menu.Item>
+      </div>
     </>
   );
 };

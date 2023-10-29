@@ -1,36 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { Menu, Sidebar } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Image, Menu, Sidebar } from "semantic-ui-react";
 import { Container } from "./styles";
+import image from "../../../../public/assets/images/user.jpg";
 
 const MenuWrapper = (props) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [sideBarVisible, setSideBarVisible] = useState(props.sidebar ?? true);
-  const [sidebarWidth, setSidebarWidth] = useState(0);
-
-
-  useEffect(() => {
-    const sidebar = document.querySelector(".ui.vertical.menu.left.sidebar");
-    if (sidebar) {
-      const computedStyle = window.getComputedStyle(sidebar);
-      const width = parseFloat(computedStyle.width);
-      setSidebarWidth(width);
-    }
-  }, []);
 
   return (
-    <>
-      <Sidebar.Pushable>
+    <div style={{ backgroundColor: "#179654" }}>
+      <Sidebar.Pushable styles={{ position: "relative" }}>
         <Sidebar
+          className="sidebar-top"
           as={Menu}
           animation="overlay"
-          direction="left"
+          direction="top"
           icon="labeled"
           inverted
-          vertical
+          horizontal
           visible={sideBarVisible}
-          style={{ backgroundColor: "#0c4c27" }}
+          style={{
+            backgroundColor: "#0c4c27",
+            zIndex: props.optionsMenuVisible ? -1 : 99999,
+          }}
         >
           {props.menuItens}
+          <Menu.Item style={{justifyContent: 'center'}}>
+            <Image size="mini" avatar src={image}></Image>
+          </Menu.Item>
         </Sidebar>
 
         <Sidebar
@@ -42,19 +39,24 @@ const MenuWrapper = (props) => {
           visible={props.optionsMenuVisible}
         >
           <Menu.Item as="a" header>
-            File Permissions
+            Alterar Senha
           </Menu.Item>
-          <Menu.Item as="a">Share on Social</Menu.Item>
-          <Menu.Item as="a">Share by E-mail</Menu.Item>
-          <Menu.Item as="a">Edit Permissions</Menu.Item>
-          <Menu.Item as="a">Delete Permanently</Menu.Item>
+          <Menu.Item as="a">Sair</Menu.Item>
+          <Menu.Item
+            as="a"
+            onClick={() => {
+              props.showOptions((prev) => !prev);
+            }}
+          >
+            Fechar
+          </Menu.Item>
         </Sidebar>
 
         <Sidebar.Pusher dimmed={props.optionsMenuVisible}>
-          <Container sidebarWidth={sidebarWidth}>{props.children}</Container>
+          <Container>{props.children}</Container>
         </Sidebar.Pusher>
       </Sidebar.Pushable>
-    </>
+    </div>
   );
 };
 

@@ -49,18 +49,18 @@ const Login = () => {
       toast.success("Login efetuado com sucesso!");
       switch (activeTab) {
         case 0: {
-          console.log('logged')
-          navigate('/coordinator/home');
+          console.log("logged");
+          navigate("/coordinator");
           break;
         }
         case 1: {
-          console.log('logged')
-          navigate('/directorate/home');
+          console.log("logged");
+          navigate("/directorate");
           break;
         }
         case 2: {
-          console.log('logged')
-          navigate('/administration/home');
+          console.log("logged");
+          navigate("/administration");
           break;
         }
       }
@@ -234,6 +234,7 @@ const Login = () => {
         />
         <br />
         <Button
+          loading={loading}
           size="large"
           color="green"
           animated
@@ -252,11 +253,15 @@ const Login = () => {
           </Button.Content>
         </Button>
         {activeTab !== 2 && (
-          <Checkbox style={{ left: "5%" }} label="Permanecer conectado" />
+          <Checkbox
+            loading={loading}
+            style={{ left: "5%" }}
+            label="Permanecer conectado"
+          />
         )}
         {activeTab === 2 && (
           <div style={{ marginTop: "15px" }}>
-            <Checkbox label="Eu li e aceito os" />
+            <Checkbox loading={loading} label="Eu li e aceito os" />
             <Link to="contrato">
               {" "}
               Termos de Uso <span>&#128206;</span>

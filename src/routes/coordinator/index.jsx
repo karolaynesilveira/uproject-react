@@ -1,22 +1,21 @@
-import Dashboard from "../../components/artifacts/dashboard";
-import PrivateRoute from "../../components/functional/privateRoute";
-import { Outlet, Route } from "react-router-dom";
-import CoordinatorMenuItens from "../../components/users/coordinator/menuItens";
+import { Route } from "react-router-dom";
 import ProjectScreen from "../../components/artifacts/projects";
+import BaseCoordinatorRoute from "./base";
+import CoordinatorHomeMessage from "./welcome";
 
 export default [
   <Route
     key={"/coordinator"}
     exact
     path="/coordinator"
-    element={
-      <PrivateRoute>
-        <Dashboard menuItens={<CoordinatorMenuItens />}>
-          <Outlet></Outlet>
-        </Dashboard>
-      </PrivateRoute>
-    }
+    element={<BaseCoordinatorRoute />}
   >
+    <Route
+      key={"/coordinator"}
+      exact
+      path="/coordinator"
+      element={<CoordinatorHomeMessage />}
+    />
     ,
     <Route
       key={"coordinator/projects"}
@@ -39,9 +38,9 @@ export default [
     />
     ,
     <Route
-      key={"coordinator/resources"}
+      key={"coordinator/solicitations"}
       exact
-      path={"/coordinator/resources"}
+      path={"/coordinator/solicitations"}
       element={<div>Recursos</div>}
     />
     ,

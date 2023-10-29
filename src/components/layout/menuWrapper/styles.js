@@ -1,15 +1,18 @@
 import styled from "styled-components";
 
+const marginTop = 70;
+
 export const Container = styled.section`
   display: flex;
   width: 100vw;
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow: hidden;
+  min-height: calc(100vh - ${marginTop}px);
+  max-height: calc(100vh - ${marginTop}px);
+  overflow: none;
+  @media (max-width: 768px) {
+    overflow: scroll;
+  }
   background: white;
-  margin-left: ${(props) => {
-    return `${props.sidebarWidth ?? "0"}px`;
-  }};
+  margin-top: ${marginTop}px;
   padding: 30px;
   flex-direction: column;
-`
+`;

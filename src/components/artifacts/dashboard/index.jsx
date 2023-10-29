@@ -3,6 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import MenuWrapper from "../../layout/menuWrapper";
 import { BreadCrumbSection, Wrapper } from "./styles";
 import { Breadcrumb } from "semantic-ui-react";
+import translateWordToPortuguese from "../../../commons/translator";
 
 const Dashboard = (props) => {
   const location = useLocation();
@@ -14,21 +15,24 @@ const Dashboard = (props) => {
     return (
       <React.Fragment key={path}>
         <Breadcrumb.Section>
-          {isLast ? path : <Link to={routeTo}>{path}</Link>}
+          {isLast ? (
+            translateWordToPortuguese(path)
+          ) : (
+            <Link to={routeTo}>{translateWordToPortuguese(path)}</Link>
+          )}
         </Breadcrumb.Section>
-        {!isLast && (
-          <Breadcrumb.Divider
-            icon="right chevron"
-          />
-        )}
+        {!isLast && <Breadcrumb.Divider icon="right chevron" />}
       </React.Fragment>
     );
   });
 
   return (
     <Wrapper>
-      {console.log(props)}
-      <MenuWrapper menuItens={props.menuItens}>
+      <MenuWrapper
+        showOptions={props.showOptions}
+        optionsMenuVisible={props.options}
+        menuItens={props.menuItens}
+      >
         <BreadCrumbSection>
           <Breadcrumb>{breadcrumbItems}</Breadcrumb>
         </BreadCrumbSection>
