@@ -1,6 +1,7 @@
 import { Route } from "react-router-dom";
 import ProjectScreen from "../../components/artifacts/projects";
 import BaseCoordinatorRoute from "./base";
+import FormProjects from "../../components/artifacts/projects/createProject";
 import CoordinatorHome from "../../components/artifacts/dashboard/coordinator";
 
 export default [
@@ -27,7 +28,7 @@ export default [
       key={"coordinator/projects/new"}
       exact
       path={"/coordinator/projects/new"}
-      element={<div>Novo</div>}
+      element={<FormProjects/>}
     />
     ,
     <Route

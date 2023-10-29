@@ -8,7 +8,7 @@ import {
   NaoVistosLabel,
 } from "./style";
 
-const CoordinatorHomeMessage = () => {
+const CoordinatorHome = () => {
   const [welcomeVisible, setWelcomeVisible] = useState(true);
   const [showUnseenMessages, setShowUnseenMessages] = useState(true);
   const [showSeenMessages, setShowSeenMessages] = useState(false);
@@ -268,4 +268,4 @@ const CoordinatorHomeMessage = () => {
   );
 };
 
-export default CoordinatorHomeMessage;
+export default CoordinatorHome;

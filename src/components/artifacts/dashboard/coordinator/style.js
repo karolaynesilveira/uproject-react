@@ -5,7 +5,7 @@ export const CardContainer = styled.div`
   margin-top: 30px;
   margin-bottom: 30px;
   align-items: baseline;
-  height: max(40vh);
+  height: max(60vh);
   display: flex;
   flex-wrap: wrap;
   overflow-y: auto;
