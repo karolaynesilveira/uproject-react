@@ -9,7 +9,7 @@ export const Container = styled.section`
   max-height: calc(100vh - ${marginTop}px);
   overflow: none;
   @media (max-width: 768px) {
-    overflow: scroll;
+    overflow: auto;
   }
   background: white;
   margin-top: ${marginTop}px;

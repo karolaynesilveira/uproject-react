@@ -4,7 +4,6 @@ import {
   CardContainer,
   CardGroup,
   FixedMessageGroup,
-  FixedMessage,
   VistasLabel,
   NaoVistosLabel,
 } from "./style";
@@ -188,9 +187,30 @@ const CoordinatorHomeMessage = () => {
     <>
       {welcomeVisible ? (
         <FixedMessageGroup>
-          <FixedMessage onDismiss={handleDismiss} />
+          <Message
+            positive
+            onDismiss={handleDismiss}
+            header="Seja bem vindo ao UProject"
+          >
+            Bem vindo ao UProject!
+            <br />A Ferramenta de gestão de recursos dos projetos UDESC.
+          </Message>
         </FixedMessageGroup>
       ) : null}
+
+      <FixedMessageGroup>
+        <Message negative header="Seja bem-vindo ao UProject">
+          <p>Como coordenador de um projeto, você tem a capacidade de:</p>
+          <ul>
+            <li>Criar novos projetos.</li>
+            <li>Solicitar trocas de rubricas.</li>
+            <li>Acompanhar o andamento dos seus projetos.</li>
+          </ul>
+          <p>
+            Para começar a explorar, basta utilizar os botões na barra acima!
+          </p>
+        </Message>
+      </FixedMessageGroup>
 
       <Divider horizontal>Notificações</Divider>
 
@@ -224,14 +244,8 @@ const CoordinatorHomeMessage = () => {
                 }
                 header={entry.title}
                 content={
-                  entry.description + `${entry.seen ? "" : <h1>Não lida</h1>}`
+                  entry.description
                 }
-                style={{
-                  border: entry.seen ? "none" : "1px solid red",
-                  boxShadow: entry.seen
-                    ? "rgba(0, 0, 0, 0.35) 0px 5px 15px"
-                    : "rgba(33, 186, 69, 0.4) 0px -5px, rgba(33, 186, 69, 0.3) 0px -10px, rgba(33, 186, 69, 0.2) 0px -15px, rgba(33, 186, 69, 0.1) 0px -20px, rgba(33, 186, 69, 0.05) 0px -25px",
-                }}
               />
             </CardGroup>
           ))

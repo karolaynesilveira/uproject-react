@@ -26,6 +26,17 @@ const Dashboard = (props) => {
     );
   });
 
+  if (breadcrumbItems.length === 1) {
+    breadcrumbItems.unshift(
+      <React.Fragment key="home">
+        <Breadcrumb.Section>
+          <Link>Home</Link>
+        </Breadcrumb.Section>
+        <Breadcrumb.Divider icon="right chevron" />
+      </React.Fragment>
+    );
+  }
+
   return (
     <Wrapper>
       <MenuWrapper

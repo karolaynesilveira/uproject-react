@@ -8,13 +8,18 @@ const CoordinatorMenuItens = ({ options, showOptions }) => {
 
   return (
     <>
-      <Image
-        fluid
-        shadow
-        style={{ padding: "0.5rem", marginRight: "-1rem", paddingLeft: "1rem" }}
-        src={logo}
-        size="small"
-      ></Image>
+<Image
+  fluid
+  style={{
+    padding: 2, // Remove padding
+    paddingRight: '-10px', // Remove margins
+    maxWidth: '200px',
+    maxHeight: '75px', 
+    background: 'green'// Ensure the image doesn't exceed its container
+  }}
+  src={logo}
+  // size="small"
+/>
       <Menu.Item
         as="a"
         onClick={() => {

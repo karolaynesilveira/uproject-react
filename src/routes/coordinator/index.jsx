@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 import ProjectScreen from "../../components/artifacts/projects";
 import BaseCoordinatorRoute from "./base";
-import CoordinatorHomeMessage from "./welcome";
+import CoordinatorHome from "../../components/artifacts/dashboard/coordinator";
 
 export default [
   <Route
@@ -14,7 +14,7 @@ export default [
       key={"/coordinator"}
       exact
       path="/coordinator"
-      element={<CoordinatorHomeMessage />}
+      element={<CoordinatorHome />}
     />
     ,
     <Route
