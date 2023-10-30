@@ -15,6 +15,8 @@ import {
 import useForm from "../../../../hooks/useForm";
 import { CustomForm, TableContainer } from "./styles";
 import ConfirmationModal from "../../../layout/confimationModal";
+import ModalProduct from "./addItens";
+import ModalSolicitation from "./addSolicitation";
 
 const options = [
   { key: "option1", text: "Opção 1", value: "Opção 1" },
@@ -155,6 +157,8 @@ const FormProjects = () => {
     },
   });
   const [open, modalWrapper] = React.useState(false);
+  const [openProduct, setOpenProduct] = useState(false);
+  const [openSolicitation, setOpenSolicitation] = useState(false);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, loading, handleChange, setData, setLoading } = useForm(
@@ -391,7 +395,14 @@ const FormProjects = () => {
       render: () => (
         <Tab.Pane>
           <>
-            <Button icon labelPosition="right" color="green">
+            <Button
+              icon
+              labelPosition="right"
+              color="green"
+              onClick={() => {
+                setOpenProduct(true);
+              }}
+            >
               Adicionar <Icon name="add" />
             </Button>
             <Button icon labelPosition="right" color="red">
@@ -508,7 +519,14 @@ const FormProjects = () => {
       render: () => (
         <Tab.Pane>
           <>
-            <Button icon labelPosition="right" color="green">
+            <Button
+              icon
+              labelPosition="right"
+              color="green"
+              onClick={() => {
+                setOpenSolicitation(true);
+              }}
+            >
               Adicionar <Icon name="add" />
             </Button>
             <Button icon labelPosition="right" color="red">
@@ -610,6 +628,11 @@ const FormProjects = () => {
         title={modalData.title}
         icon={modalData.icon}
         handleOptionSelected={modalData.handleOptionSelected}
+      />
+      <ModalProduct open={openProduct} setOpen={setOpenProduct} />
+      <ModalSolicitation
+        open={openSolicitation}
+        setOpen={setOpenSolicitation}
       />
     </>
   );
