@@ -2,17 +2,28 @@ import React, { useState } from "react";
 import {
   Button,
   Divider,
+  Dropdown,
+  Form,
   Icon,
+  Input,
   Label,
   Pagination,
   Table,
 } from "semantic-ui-react";
-import { StyledTableCell } from "./styles";
+import { Filter, StyledTableCell } from "./styles";
 import ProjectInfoModal from "./modal";
 import LoremIpsum from "react-lorem-ipsum";
 import { useNavigate } from "react-router-dom";
+import FilterLabels from "../../layout/filter";
+import ReactDatePicker from "react-datepicker";
+import ConfirmationModal from "../../layout/confimationModal";
 
 const pageSize = 8;
+
+const statusOptions = [
+  { key: "ativo", text: "Ativo", value: "Ativo" },
+  { key: "inativo", text: "Inativo", value: "Inativo" },
+];
 
 const ProjectScreen = () => {
   const navigate = useNavigate();
@@ -135,6 +146,18 @@ const ProjectScreen = () => {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  const [modalData, setModalData] = useState({
+    title: "",
+    text: "",
+    icon: "close",
+    handleOptionSelected: (bool) => {
+      console.log(bool);
+    },
+  });
+
+  const [open, modalWrapper] = React.useState(false);
 
   const handlePageChange = (e, data) => {
     setActivePage(data.activePage);
@@ -150,13 +173,39 @@ const ProjectScreen = () => {
     //
   };
 
+  const initialFilterState = {
+    nome: "",
+    orcamentoMin: "",
+    orcamentoMax: "",
+    orcamentoExecutadoMin: "",
+    orcamentoExecutadoMax: "",
+    status: [],
+    periodoMin: "",
+    periodoMax: "",
+  };
+
+  const [formData, setFormData] = useState(initialFilterState);
+
+  const handleInputChange = (e, { name, value }) => {
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleStatusChange = (e, { value }) => {
+    setFormData({ ...formData, status: value });
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleDateChange = (name, date) => {
+    setFormData({ ...formData, [name]: date });
   };
 
   return (
     <div style={{ position: "relative", minHeight: "85vh" }}>
       <div>
+        <Button.Group></Button.Group>
         <Button
           icon
           labelPosition="right"
@@ -169,18 +218,153 @@ const ProjectScreen = () => {
           <Icon name="clipboard outline" />
         </Button>
 
-        <Button icon labelPosition="right" color="orange">
+        <Button
+          icon
+          labelPosition="right"
+          color="orange"
+          onClick={() => {
+            setIsFiltersOpen(!isFiltersOpen);
+          }}
+        >
           Filtros
           <Icon name="filter" />
         </Button>
+        <div>
+          <Filter open={isFiltersOpen}>
+            <Form.Group>
+              <Form.Field
+                control={Input}
+                label="Nome"
+                placeholder="Nome"
+                name="nome"
+                onChange={handleInputChange}
+                value={formData.nome}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Field
+                style={{ minWidth: "182px" }}
+                control={Dropdown}
+                label="Status"
+                placeholder="Selecione..."
+                name="status"
+                options={statusOptions}
+                selection
+                multiple
+                onChange={handleStatusChange}
+                value={formData.status}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Field
+                control={Input}
+                label="Orçamento (Mín)"
+                placeholder="R$ 0.00"
+                name="orcamentoMin"
+                onChange={handleInputChange}
+                value={formData.orcamentoMin}
+              />
+              <Form.Field
+                control={Input}
+                label="Orçamento (Máx)"
+                placeholder="R$ 0.00"
+                name="orcamentoMax"
+                onChange={handleInputChange}
+                value={formData.orcamentoMax}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Field
+                control={Input}
+                label="Orçamento Executado (Mín)"
+                placeholder="R$ 0.00"
+                name="orcamentoExecutadoMin"
+                onChange={handleInputChange}
+                value={formData.orcamentoExecutadoMin}
+              />
+              <Form.Field
+                control={Input}
+                label="Orçamento Executado (Máx)"
+                placeholder="R$ 0.00"
+                name="orcamentoExecutadoMax"
+                onChange={handleInputChange}
+                value={formData.orcamentoExecutadoMax}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Field
+                label="Período (Min)"
+                control={ReactDatePicker}
+                selected={formData.periodoMin}
+                onChange={(date) => handleDateChange("periodoMin", date)}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="DD/MM/YYYY"
+                name="periodoMin"
+                isClearable
+                showYearDropdown
+                dropdownMode="select"
+              />
+
+              <Form.Field
+                label="Período (Máx)"
+                control={ReactDatePicker}
+                selected={formData.periodoMax}
+                onChange={(date) => handleDateChange("periodoMax", date)}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="DD/MM/YYYY"
+                name="periodoMax"
+                isClearable
+                showYearDropdown
+                dropdownMode="select"
+              />
+            </Form.Group>
+            <Form.Group style={{ marginLeft: "auto", marginTop: "15px" }}>
+              <Button
+                color="blue"
+                icon
+                labelPosition="right"
+                onClick={() => {
+                  setIsFiltersOpen(!isFiltersOpen);
+                }}
+              >
+                Voltar <Icon name="tag" />
+              </Button>
+              <Button
+                color="orange"
+                icon
+                labelPosition="right"
+                onClick={() => {
+                  setModalData({
+                    title: "Limpar",
+                    text: "Você tem certeza que deseja limpar todos os filtros?",
+                    icon: "ban",
+                    handleOptionSelected: (bool) => {
+                      if (bool) {
+                        setFormData(initialFilterState);
+                        setIsFiltersOpen(!isFiltersOpen);
+                      }
+                    },
+                  });
+                  modalWrapper(true);
+                }}
+              >
+                Limpar <Icon name="ban" />
+              </Button>
+            </Form.Group>
+            <ConfirmationModal
+              open={open}
+              modalWrapper={modalWrapper}
+              text={modalData.text}
+              title={modalData.title}
+              icon={modalData.icon}
+              handleOptionSelected={modalData.handleOptionSelected}
+            />
+          </Filter>
+        </div>
+
         <Divider horizontal>Filtros</Divider>
         <div>
-          <Label style={{ marginBottom: "10px", marginLeft: "5px" }}>
-            Orçamento maior que R$100.00 <Icon name="close" color="red" />
-          </Label>
-          <Label style={{ marginBottom: "10px", marginLeft: "5px" }}>
-            Projetos ativos <Icon name="close" color="red" />
-          </Label>
+          <FilterLabels formData={formData} formDataHandler={setFormData} />
         </div>
       </div>
 
