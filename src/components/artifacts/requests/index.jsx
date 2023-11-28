@@ -12,7 +12,6 @@ import {
 } from "semantic-ui-react";
 import { Filter, StyledTableCell } from "./styles";
 import ProjectInfoModal from "./modal";
-import LoremIpsum from "react-lorem-ipsum";
 import { useNavigate } from "react-router-dom";
 import FilterLabels from "../../layout/filter";
 import ReactDatePicker from "react-datepicker";
@@ -26,13 +25,16 @@ const statusOptions = [
   { key: "inativo", text: "Inativo", value: "Inativo" },
 ];
 
-const ProjectScreen = () => {
+const RequestScreen = () => {
   const navigate = useNavigate();
   const allProjects = [
     {
       id: 1,
-      name: "Project X",
+      item: "Café 500g",
+      quantity: 20,
+      project: "Project X",
       budget: 65000.0,
+      category: "Bens de consumo",
       spentBudget: 32000.0,
       status: "Não aprovado",
       startDate: "2022-10-15",
@@ -40,8 +42,11 @@ const ProjectScreen = () => {
     },
     {
       id: 2,
-      name: "Project Y",
+      item: "Caneta esferográfica Azul",
+      quantity: 50,
+      project: "Vestibular 2024/1",
       budget: 48000.0,
+      category: "Bens de consumo",
       spentBudget: 45000.0,
       status: "Em execução",
       startDate: "2023-01-10",
@@ -49,8 +54,11 @@ const ProjectScreen = () => {
     },
     {
       id: 3,
-      name: "Project Z",
+      item: "Caneta esferográfica preta",
+      quantity: 15,
+      project: "Project Z",
       budget: 80000.0,
+      category: "Bens de consumo",
       spentBudget: 65000.0,
       status: "Parado",
       startDate: "2023-03-25",
@@ -58,84 +66,27 @@ const ProjectScreen = () => {
     },
     {
       id: 4,
-      name: "Project W",
+      item: "Smartphone com TOF",
+      quantity: 1,
+      project: "Project Weather",
       budget: 55000.0,
+      category: "Bens permanentes",
       spentBudget: 39000.0,
-      status: "Parado",
+      status: "Não aprovado",
       startDate: "2023-04-02",
       endDate: "2023-11-20",
     },
     {
       id: 5,
-      name: "Project A",
+      item: "Carne Bovina pct 1kg",
+      quantity: 5,
+      project: "Project A",
       budget: 71000.0,
+      category: "Bens de consumo",
       spentBudget: 58000.0,
       status: "Não aprovado",
       startDate: "2023-02-05",
       endDate: "2023-10-28",
-    },
-    {
-      id: 6,
-      name: "Project B",
-      budget: 92000.0,
-      spentBudget: 75000.0,
-      status: "Parado",
-      startDate: "2023-01-15",
-      endDate: "2023-12-31",
-    },
-    {
-      id: 7,
-      name: "Project C",
-      budget: 44000.0,
-      spentBudget: 33000.0,
-      status: "Em execução",
-      startDate: "2023-03-20",
-      endDate: "2023-11-10",
-    },
-    {
-      id: 8,
-      name: "Project D",
-      budget: 68000.0,
-      spentBudget: 59000.0,
-      status: "Parado",
-      startDate: "2023-02-01",
-      endDate: "2023-12-31",
-    },
-    {
-      id: 9,
-      name: "Project E",
-      budget: 58000.0,
-      spentBudget: 42000.0,
-      status: "Em execução",
-      startDate: "2023-01-10",
-      endDate: "2023-10-20",
-    },
-    {
-      id: 10,
-      name: "Project F",
-      budget: 76000.0,
-      spentBudget: 61000.0,
-      status: "Finalizado",
-      startDate: "2023-02-28",
-      endDate: "2023-12-31",
-    },
-    {
-      id: 11,
-      name: "Project Zeta",
-      budget: 8000.0,
-      spentBudget: 42000.0,
-      status: "Em execução",
-      startDate: "2023-01-10",
-      endDate: "2023-10-20",
-    },
-    {
-      id: 12,
-      name: "Project 0",
-      budget: 999999.0,
-      spentBudget: 61000.0,
-      status: "Parado",
-      startDate: "2023-02-28",
-      endDate: "2023-12-31",
     },
   ];
 
@@ -187,8 +138,8 @@ const ProjectScreen = () => {
 
   const [formData, setFormData] = useState(initialFilterState);
 
-  const handleInputChange = (e, { name, value }) => {
-    setFormData({ ...formData, [name]: value });
+  const handleInputChange = (e, { project, value }) => {
+    setFormData({ ...formData, [project]: value });
   };
 
   const handleStatusChange = (e, { value }) => {
@@ -199,8 +150,8 @@ const ProjectScreen = () => {
     setIsModalOpen(false);
   };
 
-  const handleDateChange = (name, date) => {
-    setFormData({ ...formData, [name]: date });
+  const handleDateChange = (project, date) => {
+    setFormData({ ...formData, [project]: date });
   };
 
   return (
@@ -213,7 +164,7 @@ const ProjectScreen = () => {
           labelPosition="right"
           color="green"
           onClick={() => {
-            navigate("/coordinator/projects/new");
+            navigate(`/${LOGGED_USER == USER_TYPE_COORDINATOR? "coordinator" : "directorate"}/solicitations/new`);
           }}
         >
           Novo
@@ -238,7 +189,7 @@ const ProjectScreen = () => {
                 control={Input}
                 label="Nome"
                 placeholder="Nome"
-                name="nome"
+                project="nome"
                 onChange={handleInputChange}
                 value={formData.nome}
               />
@@ -249,7 +200,7 @@ const ProjectScreen = () => {
                 control={Dropdown}
                 label="Status"
                 placeholder="Selecione..."
-                name="status"
+                project="status"
                 options={statusOptions}
                 selection
                 multiple
@@ -262,7 +213,7 @@ const ProjectScreen = () => {
                 control={Input}
                 label="Orçamento (Mín)"
                 placeholder="R$ 0.00"
-                name="orcamentoMin"
+                project="orcamentoMin"
                 onChange={handleInputChange}
                 value={formData.orcamentoMin}
               />
@@ -270,7 +221,7 @@ const ProjectScreen = () => {
                 control={Input}
                 label="Orçamento (Máx)"
                 placeholder="R$ 0.00"
-                name="orcamentoMax"
+                project="orcamentoMax"
                 onChange={handleInputChange}
                 value={formData.orcamentoMax}
               />
@@ -280,7 +231,7 @@ const ProjectScreen = () => {
                 control={Input}
                 label="Orçamento Executado (Mín)"
                 placeholder="R$ 0.00"
-                name="orcamentoExecutadoMin"
+                project="orcamentoExecutadoMin"
                 onChange={handleInputChange}
                 value={formData.orcamentoExecutadoMin}
               />
@@ -288,7 +239,7 @@ const ProjectScreen = () => {
                 control={Input}
                 label="Orçamento Executado (Máx)"
                 placeholder="R$ 0.00"
-                name="orcamentoExecutadoMax"
+                project="orcamentoExecutadoMax"
                 onChange={handleInputChange}
                 value={formData.orcamentoExecutadoMax}
               />
@@ -301,7 +252,7 @@ const ProjectScreen = () => {
                 onChange={(date) => handleDateChange("periodoMin", date)}
                 dateFormat="dd/MM/yyyy"
                 placeholderText="DD/MM/YYYY"
-                name="periodoMin"
+                project="periodoMin"
                 isClearable
                 showYearDropdown
                 dropdownMode="select"
@@ -314,7 +265,7 @@ const ProjectScreen = () => {
                 onChange={(date) => handleDateChange("periodoMax", date)}
                 dateFormat="dd/MM/yyyy"
                 placeholderText="DD/MM/YYYY"
-                name="periodoMax"
+                project="periodoMax"
                 isClearable
                 showYearDropdown
                 dropdownMode="select"
@@ -373,10 +324,12 @@ const ProjectScreen = () => {
       <Table celled color="green" basic="very" fixed>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={2}>Nome</Table.HeaderCell>
-            <Table.HeaderCell width={4}>Descrição</Table.HeaderCell>
-            <Table.HeaderCell width={1}>Orçamento</Table.HeaderCell>
-            <Table.HeaderCell width={1}>Orçamento Executado</Table.HeaderCell>
+            <Table.HeaderCell width={2}>Item</Table.HeaderCell>
+            <Table.HeaderCell width={2}>Rubrica</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Projeto</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Quantidade</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Orç. Alocado</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Orç. Alocado Executado</Table.HeaderCell>
             <Table.HeaderCell width={1}>Status</Table.HeaderCell>
             <Table.HeaderCell width={2}>Período</Table.HeaderCell>
             <Table.HeaderCell width={1}>Ações</Table.HeaderCell>
@@ -386,16 +339,10 @@ const ProjectScreen = () => {
         <Table.Body>
           {projects.map((project) => (
             <Table.Row key={project.id}>
-              <Table.Cell>{project.name}</Table.Cell>
-              <Table.Cell collapsings>
-                {project.description || (
-                  <LoremIpsum
-                    p={1}
-                    avgWordsPerSentence={1}
-                    avgSentencesPerParagrap={1}
-                  />
-                )}
-              </Table.Cell>
+              <Table.Cell>{project.item}</Table.Cell>
+              <Table.Cell>{project.category}</Table.Cell>
+              <Table.Cell>{project.project}</Table.Cell>
+              <Table.Cell>{project.quantity}</Table.Cell>
               <Table.Cell>{`R$ ${project.budget.toFixed(2)}`}</Table.Cell>
               <Table.Cell>{`R$ ${project.spentBudget.toFixed(2)}`}</Table.Cell>
               <Table.Cell
@@ -437,7 +384,17 @@ const ProjectScreen = () => {
                   <Button
                     style={{ display: LOGGED_USER == USER_TYPE_ADMINISTRATOR & project.status == "Não aprovado" ? "" : "none" }}
                     icon
-                    onClick={() => handleEditClick(project)}
+                    onClick={() => {
+                      setModalData({
+                        title: "Aprovar",
+                        text: "Você tem certeza que deseja aprovar a seguinte solicitação?",
+                        icon: "check",
+                        handleOptionSelected: (bool) => {
+                          console.log(bool, "Estou aprovando uma solicitação");
+                        },
+                      });
+                      modalWrapper(true);
+                    }}
                     color="green"
                     circular
                   >
@@ -475,9 +432,17 @@ const ProjectScreen = () => {
             onClose={handleCloseModal}
           />
         )}
+        <ConfirmationModal
+          open={open}
+          modalWrapper={modalWrapper}
+          text={modalData.text}
+          title={modalData.title}
+          icon={modalData.icon}
+          handleOptionSelected={modalData.handleOptionSelected}
+        />
       </div>
     </div>
   );
 };
 
-export default ProjectScreen;
+export default RequestScreen;

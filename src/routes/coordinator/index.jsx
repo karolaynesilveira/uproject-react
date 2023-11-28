@@ -1,8 +1,10 @@
 import { Route } from "react-router-dom";
 import ProjectScreen from "../../components/artifacts/projects";
+import RequestScreen from "../../components/artifacts/requests";
 import BaseCoordinatorRoute from "./base";
 import FormProjects from "../../components/artifacts/projects/createProject";
 import CoordinatorHome from "../../components/artifacts/dashboard/coordinator";
+import FormSolicitations from "../../components/artifacts/requests/createRequest";
 
 export default [
   <Route
@@ -32,6 +34,13 @@ export default [
     />
     ,
     <Route
+      key={"coordinator/solicitations/new"}
+      exact
+      path={"/coordinator/solicitations/new"}
+      element={<FormSolicitations/>}
+    />
+    ,
+    <Route
       key={"coordinator/reports"}
       exact
       path={"/coordinator/reports"}
@@ -42,7 +51,7 @@ export default [
       key={"coordinator/solicitations"}
       exact
       path={"/coordinator/solicitations"}
-      element={<div>Recursos</div>}
+      element={<RequestScreen/>}
     />
     ,
     <Route

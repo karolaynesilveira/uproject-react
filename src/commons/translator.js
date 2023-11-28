@@ -7,6 +7,7 @@ export default function translateWordToPortuguese(word) {
     reports: "Relatórios",
     users: "Usuários",
     new: "Novo",
+    directorate: "Direção",
   };
 
   // eslint-disable-next-line no-prototype-builtins

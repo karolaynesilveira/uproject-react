@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../../../../public/assets/logo/logo.png";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const CoordinatorMenuItens = ({ options, showOptions }) => {
+const AdministratorMenuItens = ({ options, showOptions }) => {
   const navigate = useNavigate();
 
   return (
@@ -23,7 +23,7 @@ const CoordinatorMenuItens = ({ options, showOptions }) => {
       <Menu.Item
         as="a"
         onClick={() => {
-          navigate("/coordinator");
+          navigate("/directorate");
         }}
       >
         <Icon name="home" />
@@ -32,7 +32,7 @@ const CoordinatorMenuItens = ({ options, showOptions }) => {
       <Menu.Item
         as="a"
         onClick={() => {
-          navigate("/coordinator/projects");
+          navigate("/directorate/projects");
         }}
       >
         <Icon name="clipboard list" />
@@ -41,11 +41,20 @@ const CoordinatorMenuItens = ({ options, showOptions }) => {
       <Menu.Item
         as="a"
         onClick={() => {
-          navigate("/coordinator/solicitations");
+          navigate("/directorate/solicitations");
         }}
       >
         <Icon name="boxes" />
         Solicitações
+      </Menu.Item>
+      <Menu.Item
+        as="a"
+        onClick={() => {
+          navigate("/directorate/reports");
+        }}
+      >
+        <Icon name="archive" />
+        Relatórios
       </Menu.Item>
       <div style={{ marginLeft: "auto" }}>
         <Menu.Item as="a" onClick={() => showOptions((prev) => !prev)}>
@@ -57,4 +66,4 @@ const CoordinatorMenuItens = ({ options, showOptions }) => {
   );
 };
 
-export default CoordinatorMenuItens;
+export default AdministratorMenuItens;

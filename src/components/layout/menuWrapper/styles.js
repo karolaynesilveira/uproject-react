@@ -7,7 +7,7 @@ export const Container = styled.section`
   width: 100vw;
   min-height: calc(100vh - ${marginTop}px);
   max-height: calc(100vh - ${marginTop}px);
-  overflow: none;
+  overflow: auto;
   @media (max-width: 768px) {
     overflow: auto;
   }
