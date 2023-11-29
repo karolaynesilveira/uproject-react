@@ -5,6 +5,7 @@ import BaseAdministratorRoute from "./base";
 import FormProjects from "../../components/artifacts/projects/createProject";
 import AdministratorHome from "../../components/artifacts/dashboard/administrator";
 import FormSolicitations from "../../components/artifacts/requests/createRequest";
+import MetricsPanel from "../../components/artifacts/metrics";
 
 export default [
   <Route
@@ -44,7 +45,7 @@ export default [
       key={"directorate/reports"}
       exact
       path={"/directorate/reports"}
-      element={<div>Relatórios</div>}
+      element={<MetricsPanel/>}
     />
     ,
     <Route
